@@ -71,6 +71,9 @@
    - Marks will be deducted if I cannot successfully do this.
      
    - Marks will be deducted for using library code that does the assignment
+   
+   - Marks can be deducated for egregious violation of requirements (e.g. hard
+     coding path names etc.).
 
 ** Marking
    - 5 marks for passing all of the tests except testInternetGets
