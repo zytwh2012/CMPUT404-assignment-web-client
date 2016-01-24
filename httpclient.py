@@ -27,7 +27,7 @@ import urllib
 def help():
     print "httpclient.py [GET/POST] [URL]\n"
 
-class HTTPRequest(object):
+class HTTPResponse(object):
     def __init__(self, code=200, body=""):
         self.code = code
         self.body = body
@@ -63,12 +63,12 @@ class HTTPClient(object):
     def GET(self, url, args=None):
         code = 500
         body = ""
-        return HTTPRequest(code, body)
+        return HTTPResponse(code, body)
 
     def POST(self, url, args=None):
         code = 500
         body = ""
-        return HTTPRequest(code, body)
+        return HTTPResponse(code, body)
 
     def command(self, url, command="GET", args=None):
         if (command == "POST"):
