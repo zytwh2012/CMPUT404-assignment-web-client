@@ -13,7 +13,7 @@
      own source code.
    - You may work (pair program) with 1 other person, but both of you
      need to submit your work separately.
-   - Collaboration but be documents in the README.md file
+   - Collaboration must be documented in the README.md file
    - Any external source code must be referenced and documented in
      the README.md file
 
@@ -47,8 +47,7 @@
    - [ ] You should use the socket library that comes with python
 
 ** Recommendations
-   - Use the server.py skeleton. Handling sockets yourself is not
-     that fun
+   - Use the httpclient.py skeleton.
    - Keep it short, keep it modular
    - READ the spec, read the format of a request
    - It's a good idea to send the Host header in a GET or POST
@@ -64,9 +63,9 @@
      - Line 3: Your collaborator's CCID
 
    - To mark your assignment I should be able to type:
-     git clone http://github.com/youruserid/thisassignment.git yourccid
-     cd yourccid
-     python freetests.py
+    : git clone http://github.com/youruserid/thisassignment.git yourccid
+    : cd yourccid
+    : python freetests.py
 
    - Marks will be deducted if I cannot successfully do this.
      
