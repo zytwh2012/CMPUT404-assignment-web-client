@@ -86,6 +86,32 @@ def echo_post(self):
     self.end_headers()
     self.wfile.write(json.dumps(post_data))
 
+def header_check(self):
+    response = 200
+    errors = []
+    if 'Host' not in self.headers:
+        response = 400
+        errors.append("No Host header found")
+    self.send_response(response)
+    self.send_header("Content-type", "application/json")
+    self.end_headers()
+    self.wfile.write(json.dumps(errors))
+
+def post_header_check(self):
+    response = 200
+    errors = []
+    if 'Host' not in self.headers:
+        response = 400
+        errors.append("No Host header found")
+    if 'Content-length' not in self.headers:
+        response = 400
+        errors.append("No Content-Length header found")
+    self.send_response(response)
+    self.send_header("Content-type", "application/json")
+    self.end_headers()
+    self.wfile.write(json.dumps(errors))
+
+
 
 
 class TestHTTPClient(unittest.TestCase):
@@ -148,6 +174,28 @@ class TestHTTPClient(unittest.TestCase):
         self.assertTrue(req.code == 200)
         self.assertTrue(req.body.find(path)>=0, "Data: [%s] " % req.body)
 
+    def testGETHeaders(self):
+        '''Test HTTP GET Headers'''
+        MyHTTPHandler.get = header_check
+        http = httpclass.HTTPClient()
+        path = "abcdef/gjkd/dsadas"
+        url = "http://%s:%d/%s" % (BASEHOST,BASEPORT, path)
+        req = http.GET( url )
+        self.assertTrue(req != None, "None Returned!")
+        self.assertTrue(req.code == 200)
+
+    def testPOSTHeaders(self):
+        '''Test HTTP POST Headers'''
+        MyHTTPHandler.get = post_header_check
+        http = httpclass.HTTPClient()
+        path = "abcdef/gjkd/dsadas"
+        url = "http://%s:%d/%s" % (BASEHOST,BASEPORT, path)
+        req = http.POST( url )
+        self.assertTrue(req != None, "None Returned!")
+        self.assertTrue(req.code == 200)
+
+        
+        
     # consider disabling this test until everything else works
     def testInternetGets(self):
         '''Test HTTP Get in the wild, these webservers are far less
