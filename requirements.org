@@ -38,7 +38,7 @@
    - [ ] httpclient can handle 404 requests and 200 requests
 
 ** Restrictions
-   - [ ] Use Python 2.7
+   - [ ] Use Python 3
    - [ ] Must run in the undergrad lab (Ubuntu 12.04)
    - [ ] License your httpclient properly (use an OSI approved license)
      - Put your name on it!
@@ -53,19 +53,11 @@
    - It's a good idea to send the Host header in a GET or POST
 
 ** Submission Instructions
-   - Fork my repository from github
-     https://github.com/abramhindle/CMPUT404-assignment-web-client
-   - Push your commits to your fork
-   - In EClass for this assignment submit a URL to the git
-     repository. I would prefer github for the host.
-     - Line 1: the git URL
-     - Line 2: Your CCID
-     - Line 3: Your collaborator's CCID
+   - Upload your version of httpclient.py to eClass.
 
    - To mark your assignment I should be able to type:
-    : git clone http://github.com/youruserid/thisassignment.git yourccid
-    : cd yourccid
     : python freetests.py
+    with your version of httpclient.py in the same directory and it should run.
 
    - Marks will be deducted if I cannot successfully do this.
      

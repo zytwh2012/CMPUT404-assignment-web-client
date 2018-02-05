@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 # Copyright 2016 Abram Hindle, https://github.com/tywtyw2002, and https://github.com/treedust
 # 
@@ -25,7 +25,7 @@ import re
 import urllib
 
 def help():
-    print "httpclient.py [GET/POST] [URL]\n"
+    print("httpclient.py [GET/POST] [URL]\n")
 
 class HTTPResponse(object):
     def __init__(self, code=200, body=""):
@@ -36,7 +36,8 @@ class HTTPClient(object):
     #def get_host_port(self,url):
 
     def connect(self, host, port):
-        # use sockets!
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.connect((host, port))
         return None
 
     def get_code(self, data):
@@ -47,6 +48,12 @@ class HTTPClient(object):
 
     def get_body(self, data):
         return None
+    
+    def sendall(self, data):
+        self.socket.sendall(data)
+        
+    def close(self):
+        self.socket.close()
 
     # read everything from the socket
     def recvall(self, sock):
@@ -83,6 +90,6 @@ if __name__ == "__main__":
         help()
         sys.exit(1)
     elif (len(sys.argv) == 3):
-        print client.command( sys.argv[2], sys.argv[1] )
+        print(client.command( sys.argv[2], sys.argv[1] ))
     else:
-        print client.command( sys.argv[1] )   
+        print(client.command( sys.argv[1] ))
