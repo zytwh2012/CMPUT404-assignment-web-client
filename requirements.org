@@ -44,6 +44,7 @@
      - Put your name on it!
    - [ ] You cannot use a Web Client library except for urllib utils
      to convert strings to url-encode and query-string format and back
+      - urllib.request is BANNED
    - [ ] You should use the socket library that comes with python
 
 ** Recommendations
