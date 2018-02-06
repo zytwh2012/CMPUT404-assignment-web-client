@@ -50,7 +50,7 @@ class HTTPClient(object):
         return None
     
     def sendall(self, data):
-        self.socket.sendall(data)
+        self.socket.sendall(data.encode('utf-8'))
         
     def close(self):
         self.socket.close()
@@ -65,7 +65,7 @@ class HTTPClient(object):
                 buffer.extend(part)
             else:
                 done = not part
-        return str(buffer)
+        return buffer.decode('utf-8')
 
     def GET(self, url, args=None):
         code = 500
