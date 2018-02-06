@@ -13,9 +13,9 @@
      own source code.
    - You may work (pair program) with 1 other person, but both of you
      need to submit your work separately.
-   - Collaboration must be documented in the README.md file
+   - Collaboration must be documented in the httpclient.py file
    - Any external source code must be referenced and documented in
-     the README.md file
+     the httpclient.py file
 
 ** User Stories
    - As a user I want to GET from URLs
@@ -39,7 +39,7 @@
 
 ** Restrictions
    - [ ] Use Python 3
-   - [ ] Must run in the undergrad lab (Ubuntu 12.04)
+   - [ ] Must run in the undergrad lab (Ubuntu 16.04)
    - [ ] License your httpclient properly (use an OSI approved license)
      - Put your name on it!
    - [ ] You cannot use a Web Client library except for urllib utils
