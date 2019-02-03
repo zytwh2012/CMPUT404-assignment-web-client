@@ -41,13 +41,28 @@ class HTTPClient(object):
         return None
 
     def get_code(self, data):
-        return None
+        # response code
+        response = data.split()
+        # flag = response.index("HTTP/1.0")
+        # if not flag:
+        #     flag2 = response.index("HTTP/1.1")
+        # if flag:
+        #     code = response[flag+1]
+        # else:
+        #     code = response[flag2+1]
+        code = response[1]
+        print(code,1111111111)
+        return int(code)
 
     def get_headers(self,data):
-        return None
+        headers = data.split("\r\n\r\n")[-1]
+
+        return headers
 
     def get_body(self, data):
-        return None
+        body  = data.split("\r\n\r\n")[-1]
+
+        return  body 
     
     def sendall(self, data):
         self.socket.sendall(data.encode('utf-8'))
@@ -68,13 +83,27 @@ class HTTPClient(object):
         return buffer.decode('utf-8')
 
     def GET(self, url, args=None):
-        code = 500
-        body = ""
+        parse_result = urllib.parse.urlparse(url)
+        self.connect(parse_result.hostname,parse_result.port)
+        req = '''GET {} HTTP/1.1\r\nAccept-Encoding: identity
+Host: {}:{}\r\nUser-Agent: Python-urllib/3.5.2\r\nConnection: close\r\n\r\n'''.format(parse_result.path, parse_result.hostname, parse_result.port)
+
+        self.sendall(req)
+        data = self.recvall(self.socket)
+        print(data,1111111111)
+        code = self.get_code(data)
+        body = self.get_body(data)
         return HTTPResponse(code, body)
 
     def POST(self, url, args=None):
-        code = 500
-        body = ""
+        parse_result = urllib.parse.urlparse(url)
+        self.connect(parse_result.hostname,parse_result.port)
+        req = '''POST {} HTTP/1.1\r\nAccept-Encoding: identity\r\nContent-Length: 348
+Host: {}:{}\r\nUser-Agent: Python-urllib/3.5.2\r\nConnection: Keep-Alive\r\n\r\n'''.format(parse_result.path, parse_result.hostname, parse_result.port)
+    
+        self.sendall(req)
+        code = self.get_code(data)
+        body = self.get_body(data)
         return HTTPResponse(code, body)
 
     def command(self, url, command="GET", args=None):
