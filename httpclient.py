@@ -43,25 +43,15 @@ class HTTPClient(object):
     def get_code(self, data):
         # response code
         response = data.split()
-        # flag = response.index("HTTP/1.0")
-        # if not flag:
-        #     flag2 = response.index("HTTP/1.1")
-        # if flag:
-        #     code = response[flag+1]
-        # else:
-        #     code = response[flag2+1]
         code = response[1]
-        print(code,1111111111)
         return int(code)
 
     def get_headers(self,data):
         headers = data.split("\r\n\r\n")[-1]
-
         return headers
 
     def get_body(self, data):
         body  = data.split("\r\n\r\n")[-1]
-
         return  body 
     
     def sendall(self, data):
@@ -84,24 +74,40 @@ class HTTPClient(object):
 
     def GET(self, url, args=None):
         parse_result = urllib.parse.urlparse(url)
-        self.connect(parse_result.hostname,parse_result.port)
-        req = '''GET {} HTTP/1.1\r\nAccept-Encoding: identity
-Host: {}:{}\r\nUser-Agent: Python-urllib/3.5.2\r\nConnection: close\r\n\r\n'''.format(parse_result.path, parse_result.hostname, parse_result.port)
-
+        host = parse_result.hostname
+        port = parse_result.port
+        path = parse_result.path
+        if parse_result.port == None:
+            port = 80
+        if parse_result.path == '':
+            path = '/'
+        self.connect(host, port)
+        req = "GET {} HTTP/1.1\r\nUser-Agent: Python-urllib/3.5.2\r\nHost: {}:{}\r\nAccept-Encoding: identity\r\nConnection: close\r\n\r\n".format(path, host, port)
+        print(req)
         self.sendall(req)
         data = self.recvall(self.socket)
-        print(data,1111111111)
         code = self.get_code(data)
         body = self.get_body(data)
         return HTTPResponse(code, body)
 
     def POST(self, url, args=None):
         parse_result = urllib.parse.urlparse(url)
-        self.connect(parse_result.hostname,parse_result.port)
-        req = '''POST {} HTTP/1.1\r\nAccept-Encoding: identity\r\nContent-Length: 348
-Host: {}:{}\r\nUser-Agent: Python-urllib/3.5.2\r\nConnection: Keep-Alive\r\n\r\n'''.format(parse_result.path, parse_result.hostname, parse_result.port)
-    
+        host = parse_result.hostname
+        port = parse_result.port
+        path = parse_result.path
+        query=''
+
+        if parse_result.port == None:
+            port = 80
+        if parse_result.path == '':
+            path = '/'
+        if args != None:
+            query = urllib.parse.urlencode(args)
+
+        self.connect(host, port)
+        req = "POST {} HTTP/1.1\r\nAccept-Encoding: identity\r\nContent-Length: {}\r\nHost: {}\r\nUser-Agent: Python-urllib/3.5.2\r\nConnection: Keep-Alive\r\n\r\n{}".format(path, max(len(query),18), host, query)
         self.sendall(req)
+        data = self.recvall(self.socket)
         code = self.get_code(data)
         body = self.get_body(data)
         return HTTPResponse(code, body)
