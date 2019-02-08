@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 # Copyright 2016 Abram Hindle, https://github.com/tywtyw2002, and https://github.com/treedust
-# 
+# Copyright 2018 Yuntian Zhang, https://github.com/zytwh2012/CMPUT404-assignment-web-client
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -82,8 +82,7 @@ class HTTPClient(object):
         if parse_result.path == '':
             path = '/'
         self.connect(host, port)
-        req = "GET {} HTTP/1.1\r\nUser-Agent: Python-urllib/3.5.2\r\nHost: {}:{}\r\nAccept-Encoding: identity\r\nConnection: close\r\n\r\n".format(path, host, port)
-        print(req)
+        req = "GET {} HTTP/1.1\r\nUser-Agent: Python-urllib/3.5.2\r\nHost: {}\r\nAccept-Encoding: identity\r\nConnection: close\r\n\r\n".format(path, host)
         self.sendall(req)
         data = self.recvall(self.socket)
         code = self.get_code(data)
@@ -105,7 +104,7 @@ class HTTPClient(object):
             query = urllib.parse.urlencode(args)
 
         self.connect(host, port)
-        req = "POST {} HTTP/1.1\r\nAccept-Encoding: identity\r\nContent-Length: {}\r\nHost: {}\r\nUser-Agent: Python-urllib/3.5.2\r\nConnection: Keep-Alive\r\n\r\n{}".format(path, max(len(query),18), host, query)
+        req = "POST {} HTTP/1.1\r\nAccept-Encoding: identity\r\nContent-Length: {}\r\nHost: {}\r\nUser-Agent: Python-urllib/3.5.2\r\nContent-Type: application/x-www-form-urlencoded\r\nConnection: Keep-Alive\r\n\r\n{}".format(path, max(len(query),18), host, query)
         self.sendall(req)
         data = self.recvall(self.socket)
         code = self.get_code(data)
